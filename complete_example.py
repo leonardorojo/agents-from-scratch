@@ -16,7 +16,7 @@ def lesson_01_basic_chat():
     print("="*50)
     
     agent = Agent("models/llama-3-8b-instruct.gguf")
-    response = agent.simple_generate("What is an AI agent?")
+    response = agent.simple_generate("Explain what an AI agent is?")
     print(f"Response: {response}")
 
 
@@ -27,7 +27,7 @@ def lesson_02_with_role():
     print("="*50)
     
     agent = Agent("models/llama-3-8b-instruct.gguf")
-    response = agent.generate_with_role("What is an AI agent?")
+    response = agent.generate_with_role("Explain what an AI agent is?")
     print(f"Response: {response}")
 
 

@@ -8,7 +8,7 @@ Lesson progression:
 01: Basic LLM chat
 02: System prompts (roles)
 03: Structured outputs (JSON)
-04: Decision making
+04: Decision-making
 05: Tool calling
 06: Agent loop
 07: Memory

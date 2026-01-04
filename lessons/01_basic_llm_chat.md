@@ -19,34 +19,17 @@ That's it. No magic. No frameworks. Just the basics.
 
 ### 1. Prompts
 
-A **prompt** is just text you send to the model. It can be:
-- A question: "What is an AI agent?"
-- An instruction: "Explain quantum computing"
-- A request: "Write a poem about the ocean"
-
-The model completes or responds to this text based on patterns it learned during training.
+A **prompt** is just text you send to the model. It can be a question like "What is an AI agent?", an instruction like "Explain quantum computing", or a request like "Write a poem about the ocean". The model completes or responds to this text based on patterns it learned during training.
 
 ### 2. Tokens
 
-Models don't see text as words - they see **tokens**. Tokens are pieces of text (often words or subwords).
+Models don't see text as words - they see **tokens**. Tokens are pieces of text (often words or subwords). For example, "Hello world" might be 2 tokens, while "artificial intelligence" could be 2-4 tokens depending on the model.
 
-Example:
-- "Hello world" → 2 tokens
-- "artificial intelligence" → 2-4 tokens depending on the model
-
-This matters because:
-- Models have token limits (context windows)
-- Generation is measured in tokens per second
-- Longer prompts use more tokens = less room for responses
+This matters because models have token limits (context windows), generation is measured in tokens per second, and longer prompts use more tokens, leaving less room for responses.
 
 ### 3. Context
 
-The **context** is everything the model can "see" at once. It includes:
-- Your prompt
-- Any previous conversation
-- System instructions
-
-Models have a **context window** (e.g., 2048 tokens). If you exceed it, the model can't see the earlier text.
+The **context** is everything the model can "see" at once. It includes your prompt, any previous conversation, and system instructions. Models have a **context window** (e.g., 2048 tokens). If you exceed it, the model can't see the earlier text.
 
 ## What We Are NOT Doing (Yet)
 
@@ -98,23 +81,15 @@ print(response)
 
 ### There is No "Understanding"
 
-The model doesn't "understand" your question. It:
-- Recognizes patterns in the tokens
-- Predicts likely continuations
-- Generates probabilistic text
-
-This is important: **models are pattern matchers, not minds.**
+The model doesn't "understand" your question. Instead, it recognizes patterns in the tokens, predicts likely continuations, and generates probabilistic text. This is important: **models are pattern matchers, not minds.**
 
 ### It's Probabilistic
 
-Run the same prompt twice - you might get different responses. This is because:
-- Models use randomness (temperature) in generation
-- Multiple plausible continuations exist
-- No single "correct" answer
+Run the same prompt twice and you might get different responses. This happens because models use randomness (temperature) in generation, and multiple plausible continuations exist. There's no single "correct" answer - just probabilistic outputs.
 
 ### Text In = Text Out
 
-That's all this is. Everything else we build (agents, tools, memory) is built on top of this foundation.
+That's all this is. Everything else we build (agents, tools, memory) is built on top of this simple foundation.
 
 ## Common Issues
 
