@@ -6,7 +6,6 @@ Plans are inspectable, modifiable data structures.
 """
 
 from shared.llm import LocalLLM
-from shared.utils import safe_json_parse
 
 
 def create_plan(llm: LocalLLM, goal: str) -> dict | None:

@@ -20,7 +20,7 @@ Lesson progression:
 from typing import Any
 
 from shared.llm import LocalLLM
-from shared.utils import safe_json_parse, extract_json_from_text
+from shared.utils import extract_json_from_text
 from agent.state import AgentState
 from agent.memory import Memory
 from agent.tools import get_tool_schema, execute_tool
