@@ -2,10 +2,11 @@
 """
 Complete Agent Example
 
-This script demonstrates the agent using features from all 10 lessons.
+This script demonstrates the agent using features from all 12 lessons.
 It's meant as a reference for how the pieces fit together.
 """
 
+import time
 from agent.agent import Agent
 
 
@@ -190,6 +191,134 @@ def lesson_10_aot():
         print(f"Execution results: {results}")
 
 
+def lesson_11_evals():
+    """Lesson 11: Evals (Regression Testing)"""
+    print("\n" + "="*50)
+    print("LESSON 11: Evals")
+    print("="*50)
+    
+    from agent.evals import AgentEval, print_eval_report
+    from evals.golden_datasets import (
+        STRUCTURED_OUTPUT_GOLDEN,
+        TOOL_CALL_GOLDEN,
+        DECISION_GOLDEN,
+        MEMORY_GOLDEN
+    )
+    
+    agent = Agent("models/llama-3-8b-instruct.gguf")
+    evaluator = AgentEval(agent)
+    
+    print("\nRunning eval suites...")
+    print("(This may take a minute as it runs multiple agent calls)\n")
+    
+    # Run a subset for demo (full suite can be slow)
+    # Using first 2 cases from each suite for quick demo
+    results = evaluator.run_all(
+        structured_cases=STRUCTURED_OUTPUT_GOLDEN[:2],
+        tool_cases=TOOL_CALL_GOLDEN[:2],
+        decision_cases=DECISION_GOLDEN[:2],
+        memory_cases=MEMORY_GOLDEN[:1]
+    )
+    
+    # Print the report
+    print_eval_report(results)
+    
+    # Show how to access individual results
+    print("\nAccessing individual suite results:")
+    for suite in results:
+        print(f"  {suite.name}: {suite.pass_rate:.0%} pass rate")
+
+
+def lesson_12_telemetry():
+    """Lesson 12: Telemetry (Runtime Observability)"""
+    print("\n" + "="*50)
+    print("LESSON 12: Telemetry")
+    print("="*50)
+    
+    from agent.telemetry import Telemetry
+    
+    agent = Agent("models/llama-3-8b-instruct.gguf")
+    telemetry = Telemetry(log_file="agent_telemetry.jsonl")
+    
+    # Clear previous telemetry for clean demo
+    telemetry.clear()
+    
+    print("\nRunning agent operations with telemetry...")
+    
+    # Start a trace for this interaction
+    trace_id = telemetry.start_trace()
+    print(f"Trace ID: {trace_id}")
+    
+    # Operation 1: Structured output
+    print("\n1. Structured output call...")
+    start = time.time()
+    result1 = agent.generate_structured(
+        "What is Python?", 
+        '{"answer": string, "difficulty": "beginner" | "intermediate" | "advanced"}'
+    )
+    duration1 = (time.time() - start) * 1000
+    
+    telemetry.log_llm_call(
+        prompt_length=150,
+        response_length=len(str(result1)) if result1 else 0,
+        duration_ms=duration1,
+        success=result1 is not None,
+        error=None if result1 else "Failed to parse JSON"
+    )
+    print(f"   Result: {result1}")
+    print(f"   Duration: {duration1:.0f}ms")
+    
+    # Operation 2: Tool call
+    print("\n2. Tool call...")
+    start = time.time()
+    tool_call = agent.request_tool("What is 15 * 8?")
+    duration2 = (time.time() - start) * 1000
+    
+    telemetry.log_llm_call(
+        prompt_length=200,
+        response_length=len(str(tool_call)) if tool_call else 0,
+        duration_ms=duration2,
+        success=tool_call is not None
+    )
+    
+    if tool_call:
+        telemetry.log_tool_call(
+            tool_name=tool_call.get("tool", "unknown"),
+            arguments=tool_call.get("arguments", {}),
+            result=agent.execute_tool_call(tool_call) if tool_call else None,
+            duration_ms=1.0  # Tool execution is fast
+        )
+        print(f"   Tool: {tool_call}")
+    
+    # Operation 3: Memory
+    print("\n3. Memory operation...")
+    start = time.time()
+    result3 = agent.run_with_memory("My favorite color is blue")
+    duration3 = (time.time() - start) * 1000
+    
+    telemetry.log_llm_call(
+        prompt_length=300,
+        response_length=len(str(result3)) if result3 else 0,
+        duration_ms=duration3,
+        success=result3 is not None
+    )
+    telemetry.log_memory_operation("add", "favorite color is blue")
+    print(f"   Result: {result3}")
+    
+    # Print telemetry summary
+    telemetry.print_summary()
+    
+    # Show recent spans
+    print("\nRecent spans:")
+    for span in telemetry.get_recent_spans(5):
+        event = span.get("event_type", "unknown")
+        duration = span.get("duration_ms", "N/A")
+        print(f"  [{event}] duration={duration}ms")
+    
+    print(f"\nTelemetry logged to: agent_telemetry.jsonl")
+    print("View with: cat agent_telemetry.jsonl | head -5")
+
+
 def main():
     """Run all lesson examples"""
     print("\n" + "#"*50)
@@ -208,6 +337,8 @@ def main():
         lesson_08_planning()
         lesson_09_atomic_actions()
         lesson_10_aot()
+        lesson_11_evals()
+        lesson_12_telemetry()
         
         print("\n" + "="*50)
         print("All examples completed!")

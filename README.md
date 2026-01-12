@@ -16,7 +16,7 @@ If something feels like magic, open the file — there is no hidden logic in thi
 
 ## What You Will Learn
 
-This repository builds one continuously evolving agent across 10 lessons:
+This repository builds one continuously evolving agent across 12 lessons:
 
 | Lesson | Capability Added | Link |
 |--------|------------------|------|
@@ -30,6 +30,8 @@ This repository builds one continuously evolving agent across 10 lessons:
 | 08 | Planning (as data, not thoughts) | [lessons/08_planning.md](lessons/08_planning.md) |
 | 09 | Atomic actions (safe execution) | [lessons/09_atomic_actions.md](lessons/09_atomic_actions.md) |
 | 10 | AoT - Atom of Thought (dependency graphs) | [lessons/10_atom_of_thought.md](lessons/10_atom_of_thought.md) |
+| 11 | Evals (regression testing) | [lessons/11_evals.md](lessons/11_evals.md) |
+| 12 | Telemetry (runtime observability) | [lessons/12_telemetry.md](lessons/12_telemetry.md) |
 
 ## Who This Is For
 
@@ -55,7 +57,7 @@ In short:
 2. Download a GGUF model to the `models/` folder
 3. Run: `python complete_example.py`
 
-**Note:** The `complete_example.py` file contains executable code examples demonstrating all 10 lessons. You can use it as a reference to see how all the concepts fit together.
+**Note:** The `complete_example.py` file contains executable code examples demonstrating all 12 lessons. You can use it as a reference to see how all the concepts fit together.
 
 ## Repository Structure
 
@@ -64,7 +66,7 @@ ai-agents-from-scratch/
 ├─ README.md              # You are here
 ├─ philosophy.md          # Why this repo exists
 ├─ QUICKSTART.md          # Detailed setup guide
-├─ complete_example.py    # Demonstrations of all 10 lessons
+├─ complete_example.py    # Demonstrations of all 12 lessons
 ├─ requirements.txt       # Python dependencies
 │
 ├─ models/                # Place GGUF models here
@@ -74,22 +76,34 @@ ai-agents-from-scratch/
 │  ├─ memory.py            # Memory system
 │  ├─ planner.py           # Planning and atomic actions
 │  ├─ state.py             # Agent state management
-│  └─ tools.py             # Tool definitions
-└─ lessons/               # Step-by-step explanations (01-10)
+│  ├─ tools.py             # Tool definitions
+│  ├─ evals.py             # Evaluation framework (Lesson 11)
+│  └─ telemetry.py         # Telemetry system (Lesson 12)
+├─ evals/                 # Golden datasets for testing
+│  └─ golden_datasets.py   # Known-good test cases
+└─ lessons/               # Step-by-step explanations (01-12)
 ```
 
 ### Key Files Explained
 
 **`agent/agent.py`** - The heart of the repository
-- Contains the `Agent` class that evolves across all 10 lessons
+- Contains the `Agent` class that evolves across all 12 lessons
 - Each lesson adds new methods and capabilities to this same class
 - This is what you study and modify as you learn
 
 **`complete_example.py`** - Learning reference
-- Contains 10 separate functions, one for each lesson
+- Contains 12 separate functions, one for each lesson
 - Each function demonstrates that lesson's concepts in isolation
 - Use this to see how individual lessons work before combining them
 - Run: `python complete_example.py`
+
+**`agent/evals.py`** - Regression testing (Lesson 11)
+- Test your agent against known-good cases
+- Catch prompt regressions before deployment
+
+**`agent/telemetry.py`** - Runtime observability (Lesson 12)
+- Structured logging for debugging
+- Track latency, success rates, and traces
 
 **Relationship**: 
 - `agent/agent.py` = the code you're learning (the implementation)
@@ -119,6 +133,7 @@ The curriculum is designed to build understanding gradually:
 - Lessons 1-3: Foundation (LLM basics)
 - Lessons 4-6: Agency (decisions, tools, loops)
 - Lessons 7-10: Intelligence (memory, planning, execution)
+- Lessons 11-12: Observability (evals, telemetry)
 
 ## Contributing
 
