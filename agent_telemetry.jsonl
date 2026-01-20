@@ -1,0 +1,5 @@
+{"span_id": "1c4ac0d7", "trace_id": "86bfbd07", "event_type": "llm_call", "timestamp": "2026-01-20T16:36:21.883720", "duration_ms": 1098678.77, "data": {"prompt_length": 150, "response_length": 0, "attempt": 1, "success": false}, "error": "Failed to parse JSON"}
+{"span_id": "e94764d2", "trace_id": "86bfbd07", "event_type": "llm_call", "timestamp": "2026-01-20T16:36:32.366226", "duration_ms": 10473.45, "data": {"prompt_length": 200, "response_length": 79, "attempt": 1, "success": true}}
+{"span_id": "b7ac9a3f", "trace_id": "86bfbd07", "event_type": "tool_call", "timestamp": "2026-01-20T16:36:32.373526", "duration_ms": 1.0, "data": {"tool": "calculator", "arguments": {"a": 15, "b": 8, "operation": "multiply"}, "result": "120"}}
+{"span_id": "b0027f40", "trace_id": "86bfbd07", "event_type": "llm_call", "timestamp": "2026-01-20T16:36:44.245043", "duration_ms": 11871.52, "data": {"prompt_length": 300, "response_length": 86, "attempt": 1, "success": true}}
+{"span_id": "a0605c62", "trace_id": "86bfbd07", "event_type": "memory", "timestamp": "2026-01-20T16:36:44.245043", "data": {"operation": "add", "data": "favorite color is blue"}}
